@@ -18,8 +18,7 @@ variable "default_location" {
   type = string
 }
 
-# Change the default value for a unique name
-variable "company" {
+variable "orgname" {
   default = "cloudtechstack"
   type = string
 }
