@@ -19,6 +19,18 @@ resource "azurerm_resource_group" "labcloudvirtual-rg" {
 #  key_vault_id = data.azurerm_key_vault.labcloudvirtual-vault01.id
 #}
 
+module "labcloudvirtual-network" {
+  source = "github.com/cloudvirtuals/coremodules/modules/network"
+}
+
+module "labcloudvirtual-adf" {
+  source = "github.com/cloudvirtuals/coremodules/modules/adf"
+  rgname = var.rgname
+  location = var.default_location
+  orgname = var.orgname
+  env = var.env
+}
+
 module "labcloudvirtual-adb" {
   source = "github.com/cloudvirtuals/coremodules/modules/adb"
   rgname = var.rgname
@@ -29,6 +41,8 @@ module "labcloudvirtual-adb" {
   secretsname = var.secretsname
   dbwscope = var.dbwscope
   env = var.env
+  node_type_id = var.node_type_id
+  noworkers = 0
 }
 
 module "blob-storage" {
@@ -54,22 +68,5 @@ module "blob-storage" {
 #
 #}
 
-resource "azurerm_data_factory" "labcloudvirtual-datafactory" {
-  name                = var.orgname
-  location            = var.default_location
-  resource_group_name = var.rgname
- 
-  github_configuration {
-    account_name = "cloudvirtuals"
-    branch_name = "main"
-    git_url = "https://github.com/cloudvirtuals"
-    repository_name = "lambdatest"
-    root_folder = "/"
-  }
 
-  tags = {
-        creator = "Terraform"
-        project = var.orgname
-  }
-}
 

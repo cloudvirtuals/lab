@@ -56,9 +56,9 @@ variable "stgaccname" {
 variable "secretsname" {
     type = map
     default = {
-        "databricksappsecret" = "databricksappsecret"
-        "databricksappclientid" = "databricksappclientid"
-        "tenantid" = "tenantid"
+        "databricksappsecret" = "cloudtechstack-adbappsecret"
+        "databricksappclientid" = "cloudtechstack-adbappclientid"
+        "tenantid" = "cloudtechstack-adbtenantid"
     }
 }
 variable "adfstgname" {
@@ -113,8 +113,13 @@ variable "adbclustername" {
     type = string
     default = "labcloudvirtual-adbcluster"
 }
+variable "node_type_id" {   
+    sensitive = true
+    type = string
+    default = "Standard_DS3_v2"
+}
 variable "noworkers" {   
     sensitive = true
     type = string
-    default = 1
+    default = "1"
 }
